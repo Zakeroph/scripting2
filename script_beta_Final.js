@@ -749,7 +749,7 @@ _audioNeed.src = 'http://www.moviesoundclips.net/movies1/aliens/cards.ogg';
 var storedEncounters = [];
 var nearbyEncounters = [];
 
-var centerLocation = [-26.12996325913724,28.185778856277466];
+var centerLocation = [-26.12996325913724 , 28.185778856277466];
 
 var showAll = true;
 
