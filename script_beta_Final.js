@@ -465,8 +465,8 @@ function updateTime() {
 }
 
 function parseHash(hash) {
-    var defaultLat = "34.0095897345215";
-    var defaultLng = "-118.49791288375856";
+    var defaultLat = "-26.12996325913724";
+    var defaultLng = "28.185778856277466";
     var match = /^#(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/.exec(hash);
     if (!match) {
         return [defaultLat, defaultLng];
