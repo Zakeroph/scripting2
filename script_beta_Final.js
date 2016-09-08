@@ -17,7 +17,7 @@ var trackingEnabled = false;
 var shownMarker = [];
 var cookiedelimchar = 'x';
 
-var tempPoly = [[]];
+var tempPoly = [[-26.128662888571554,28.17675590515137],[-26.124540136559446,28.190960884094242],[-26.12839318027119,28.19675445556641],[-26.1374088058832,28.193192481994632],[-26.13733175220306,28.182377815246582]];
 var mkPoly = [];
 
 for(var i = 0; i < tempPoly.length; i++) {
