@@ -17,23 +17,11 @@ var trackingEnabled = false;
 var shownMarker = [];
 var cookiedelimchar = 'x';
 
-var tempPoly = [[28.103070259094242,-26.00989258640274],[28.10804843902588,-25.99126237511028],[28.11538696289063,-25.972590628875288],[28.13834667205811,-25.965491501227756],[28.158988952636722,-25.975098370470747],[28.15727233886719,-26.002140000279837],[28.121953010559086,-26.02740151905132]];
-var mkPoly = [];
-
-for(var i = 0; i < tempPoly.length; i++) {
-	mkPoly.push([tempPoly[i][1], tempPoly[i][0]]);
-}
-
 var PokemonIdList={"BULBASAUR":1,"IVYSAUR":2,"VENUSAUR":3,"CHARMANDER":4,"CHARMELEON":5,"CHARIZARD":6,"SQUIRTLE":7,"WARTORTLE":8,"BLASTOISE":9,"CATERPIE":10,"METAPOD":11,"BUTTERFREE":12,"WEEDLE":13,"KAKUNA":14,"BEEDRILL":15,"PIDGEY":16,"PIDGEOTTO":17,"PIDGEOT":18,"RATTATA":19,"RATICATE":20,"SPEAROW":21,"FEAROW":22,"EKANS":23,"ARBOK":24,"PIKACHU":25,"RAICHU":26,"SANDSHREW":27,"SANDSLASH":28,"NIDORAN_FEMALE":29,"NIDORINA":30,"NIDOQUEEN":31,"NIDORAN_MALE":32,"NIDORINO":33,"NIDOKING":34,"CLEFAIRY":35,"CLEFABLE":36,"VULPIX":37,"NINETALES":38,"JIGGLYPUFF":39,"WIGGLYTUFF":40,"ZUBAT":41,"GOLBAT":42,"ODDISH":43,"GLOOM":44,"VILEPLUME":45,"PARAS":46,"PARASECT":47,"VENONAT":48,"VENOMOTH":49,"DIGLETT":50,"DUGTRIO":51,"MEOWTH":52,"PERSIAN":53,"PSYDUCK":54,"GOLDUCK":55,"MANKEY":56,"PRIMEAPE":57,"GROWLITHE":58,"ARCANINE":59,"POLIWAG":60,"POLIWHIRL":61,"POLIWRATH":62,"ABRA":63,"KADABRA":64,"ALAKAZAM":65,"MACHOP":66,"MACHOKE":67,"MACHAMP":68,"BELLSPROUT":69,"WEEPINBELL":70,"VICTREEBEL":71,"TENTACOOL":72,"TENTACRUEL":73,"GEODUDE":74,"GRAVELER":75,"GOLEM":76,"PONYTA":77,"RAPIDASH":78,"SLOWPOKE":79,"SLOWBRO":80,"MAGNEMITE":81,"MAGNETON":82,"FARFETCHD":83,"DODUO":84,"DODRIO":85,"SEEL":86,"DEWGONG":87,"GRIMER":88,"MUK":89,"SHELLDER":90,"CLOYSTER":91,"GASTLY":92,"HAUNTER":93,"GENGAR":94,"ONIX":95,"DROWZEE":96,"HYPNO":97,"KRABBY":98,"KINGLER":99,"VOLTORB":100,"ELECTRODE":101,"EXEGGCUTE":102,"EXEGGUTOR":103,"CUBONE":104,"MAROWAK":105,"HITMONLEE":106,"HITMONCHAN":107,"LICKITUNG":108,"KOFFING":109,"WEEZING":110,"RHYHORN":111,"RHYDON":112,"CHANSEY":113,"TANGELA":114,"KANGASKHAN":115,"HORSEA":116,"SEADRA":117,"GOLDEEN":118,"SEAKING":119,"STARYU":120,"STARMIE":121,"MR_MIME":122,"SCYTHER":123,"JYNX":124,"ELECTABUZZ":125,"MAGMAR":126,"PINSIR":127,"TAUROS":128,"MAGIKARP":129,"GYARADOS":130,"LAPRAS":131,"DITTO":132,"EEVEE":133,"VAPOREON":134,"JOLTEON":135,"FLAREON":136,"PORYGON":137,"OMANYTE":138,"OMASTAR":139,"KABUTO":140,"KABUTOPS":141,"AERODACTYL":142,"SNORLAX":143,"ARTICUNO":144,"ZAPDOS":145,"MOLTRES":146,"DRATINI":147,"DRAGONAIR":148,"DRAGONITE":149,"MEWTWO":150,"MEW":151};
 
 var pokemonNames={1:'Bulbasaur',2:'Ivysaur',3:'Venusaur',4:'Charmander',5:'Charmeleon',6:'Charizard',7:'Squirtle',8:'Wartortle',9:'Blastoise',10:'Caterpie',11:'Metapod',12:'Butterfree',13:'Weedle',14:'Kakuna',15:'Beedrill',16:'Pidgey',17:'Pidgeotto',18:'Pidgeot',19:'Rattata',20:'Raticate',21:'Spearow',22:'Fearow',23:'Ekans',24:'Arbok',25:'Pikachu',26:'Raichu',27:'Sandshrew',28:'Sandslash',29:'Nidoran F',30:'Nidorina',31:'Nidoqueen',32:'Nidoran M',33:'Nidorino',34:'Nidoking',35:'Clefairy',36:'Clefable',37:'Vulpix',38:'Ninetales',39:'Jigglypuff',40:'Wigglytuff',41:'Zubat',42:'Golbat',43:'Oddish',44:'Gloom',45:'Vileplume',46:'Paras',47:'Parasect',48:'Venonat',49:'Venomoth',50:'Diglett',51:'Dugtrio',52:'Meowth',53:'Persian',54:'Psyduck',55:'Golduck',56:'Mankey',57:'Primeape',58:'Growlithe',59:'Arcanine',60:'Poliwag',61:'Poliwhirl',62:'Poliwrath',63:'Abra',64:'Kadabra',65:'Alakazam',66:'Machop',67:'Machoke',68:'Machamp',69:'Bellsprout',70:'Weepinbell',71:'Victreebel',72:'Tentacool',73:'Tentacruel',74:'Geodude',75:'Graveler',76:'Golem',77:'Ponyta',78:'Rapidash',79:'Slowpoke',80:'Slowbro',81:'Magnemite',82:'Magneton',83:'Farfetch\'d',84:'Doduo',85:'Dodrio',86:'Seel',87:'Dewgong',88:'Grimer',89:'Muk',90:'Shellder',91:'Cloyster',92:'Gastly',93:'Haunter',94:'Gengar',95:'Onix',96:'Drowzee',97:'Hypno',98:'Krabby',99:'Kingler',100:'Voltorb',101:'Electrode',102:'Exeggcute',103:'Exeggutor',104:'Cubone',105:'Marowak',106:'Hitmonlee',107:'Hitmonchan',108:'Lickitung',109:'Koffing',110:'Weezing',111:'Rhyhorn',112:'Rhydon',113:'Chansey',114:'Tangela',115:'Kangaskhan',116:'Horsea',117:'Seadra',118:'Goldeen',119:'Seaking',120:'Staryu',121:'Starmie',122:'Mr. Mime',123:'Scyther',124:'Jynx',125:'Electabuzz',126:'Magmar',127:'Pinsir',128:'Tauros',129:'Magikarp',130:'Gyarados',131:'Lapras',132:'Ditto',133:'Eevee',134:'Vaporeon',135:'Jolteon',136:'Flareon',137:'Porygon',138:'Omanyte',139:'Omastar',140:'Kabuto',141:'Kabutops',142:'Aerodactyl',143:'Snorlax',144:'Articuno',145:'Zapdos',146:'Moltres',147:'Dratini',148:'Dragonair',149:'Dragonite',150:'Mewtwo',151:'Mew',};
 var filterdict = {};
 var isLoading = false;
-
-var repeaterGogo = false;
-var retryLimit = 10;
-var repeater;
-var nextScan;
 
 L.HtmlIcon = L.Icon.extend({
     options: {},
@@ -105,7 +93,7 @@ function createPokeIcon(pokemonid, timestamp, filtered) {
 
 
 function loadCache(cp) { //Loads cache around object
-    $.getJSON("https://cache.fastpokemap.se/?key=" + window.fingerprint + "&ts=" + window.salt + "&compute=undefined&lat=" + cp.lat + "&lng=" + cp.lng, function(data) {
+    $.getJSON("https://cache.fastpokemap.se/?key=" + window.fingerprint + "&ts=" + window.salt + "&compute=" + window.myIp + "&lat=" + cp.lat + "&lng=" + cp.lng, function(data) {
 
         if (data.length >= 1) {
 
@@ -238,18 +226,18 @@ function getPokemon(lat, lng) {
                 $.ajax(ajaxCall);
                 return;
             } else {
-                $(".scan").prop("disabled", false);
+        $(".scan").prop("disabled", false);
                 var curstatus = 'failed';
-                isScanning = false;
-                var currfailure = (new Date).getTime();
-                $('.scan').data("failid", currfailure);
-                $('.scan').removeClass('active').addClass(curstatus); // Add statuscolor to scanbutton
-                setTimeout(function() {
-                    if($('.scan').data("failid") == currfailure) { //make sure the status color of the last failure will always last 1.5s
-                        $('.scan').removeClass(curstatus);
-                        currfailure = null;
-                    }
-                }, 1500); // Hide status color after 1,5 seconds
+        isScanning = false;
+        var currfailure = (new Date).getTime();
+        $('.scan').data("failid", currfailure);
+        $('.scan').removeClass('active').addClass(curstatus); // Add statuscolor to scanbutton
+        setTimeout(function() {
+            if($('.scan').data("failid") == currfailure) { //make sure the status color of the last failure will always last 1.5s
+                $('.scan').removeClass(curstatus);
+                currfailure = null;
+            }
+        }, 1500); // Hide status color after 1,5 seconds
             }
 
 		},
@@ -344,7 +332,6 @@ function findCoordinate(addr) {
             window.location.hash = (lat + "," + lng)
             map.setView(resultLatLng, 16);
             marker.setLatLng(resultLatLng);
-            circle.setLatLng(resultLatLng);
             throttledLoadCache(resultLatLng);
         } else {
             alert("Couldn't find location... Be less specific");
@@ -355,7 +342,6 @@ function findCoordinate(addr) {
 function onLocationFound(event) {
     var cp = new L.LatLng(event.latlng.lat, event.latlng.lng);
     marker.setLatLng(cp);
-    circle.setLatLng(cp);
     map.setView(cp);
     throttledLoadCache(cp);
 
@@ -365,6 +351,8 @@ function onLocationFound(event) {
         }
         $(".scan").prop("disabled", true);
         isScanning = true;
+		circle.setLatLng(cp);
+		circleNearby.setLatLng(cp);
         getPokemon(cp.lat, cp.lng);
         doAdditionalScans(cp);
     }
@@ -372,7 +360,7 @@ function onLocationFound(event) {
 
 function initmap() {
 
-	map = L.map('map').setView([centerLocation[0], centerLocation[1]], 15);
+	map = L.map('map').setView(centerLocation, 15);
     //var osmUrl = 'https://jmakarkklfrvdvg.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}';
     var osmUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}';
     //var osmUrl = 'https://tiles.getwemap.com/osm_tiles/{z}/{x}/{y}.png'
@@ -384,6 +372,7 @@ function initmap() {
     map.addLayer(marker);
     //map.addLayer(osm);
     map.addLayer(circle);
+	map.addLayer(circleNearby);
     var gl = L.mapboxGL({
 		accessToken: "fpm-map",
 		style: 'fpm-style.json'
@@ -408,6 +397,7 @@ function initmap() {
                     $('.scan').removeClass('success').removeClass('failed').addClass('active'); // Start spinning
                 }
                 circle.setLatLng(cp);
+				circleNearby.setLatLng(cp);
                 getPokemon(cp.lat, cp.lng);
 				doAdditionalScans(cp);
             }
@@ -416,10 +406,11 @@ function initmap() {
         }
         throttledLoadCache(cp);
     });
+
     map.on("dblclick", function(event) {
         var cp = new L.LatLng(event.latlng.lat, event.latlng.lng);
         marker.setLatLng(cp);
-        circle.setLatLng(cp);
+        //circle.setLatLng(cp);
 
     });
     map.locate({
@@ -476,7 +467,7 @@ function parseHash(hash) {
 
 var marker;
 var circle;
-var polygon;
+var circleNearby;
 
 /* iPhone (not homescreen) Ads fix */               /* <------- NEW!!! */
 var iphoneheight = (window.navigator.userAgent.indexOf('iPhone') != -1 && window.navigator.standalone == false) ? "68px" : "0px";
@@ -541,7 +532,8 @@ $(function() {
         marker = new L.marker(startLatLng, {
             draggable: true
         });
-        circle = new L.circle(startLatLng, 60);
+        circle = new L.circle(startLatLng, 70);
+		circleNearby = new L.circle(startLatLng, 200,  {color: 'red', opacity: '0.1', fillColor: '#f03', fillOpacity: 0.1});
         marker.on("drag", function(e) {
             circle.setLatLng(e.latlng);
         });
@@ -585,6 +577,8 @@ $(function() {
                 }
                 $(".scan").prop("disabled", true);
                 isScanning = true;
+				circle.setLatLng(cp);
+				circleNearby.setLatLng(cp);
                 getPokemon(cp.lat, cp.lng);
 				doAdditionalScans(cp);
             }
@@ -746,10 +740,24 @@ var _audioNeed = document.createElement('audio');
 _audioNeed.setAttribute("id", "audioNeeded");
 _audioNeed.src = 'http://www.moviesoundclips.net/movies1/aliens/cards.ogg';
 
+var tempPoly = [[28.103070259094242,-26.00989258640274],[28.10804843902588,-25.99126237511028],[28.11538696289063,-25.972590628875288],[28.13834667205811,-25.965491501227756],[28.158988952636722,-25.975098370470747],[28.15727233886719,-26.002140000279837],[28.121953010559086,-26.02740151905132]];
+var mkPoly = [];
+
+for(var i = 0; i < tempPoly.length; i++) {
+	mkPoly.push([tempPoly[i][1], tempPoly[i][0]]);
+}
+
+var repeaterGogo = false;
+var retryLimit = 10;
+var repeater;
+var nextScan;
+
 var storedEncounters = [];
 var nearbyEncounters = [];
 
 var centerLocation = [-26.009699742208735, 28.115172386169437];
+
+var polygon;
 
 var showAll = true;
 
@@ -857,6 +865,7 @@ function checkForRare(spawn, cached, nearby, lat, lng) {
 			case "WEEPINBELL".toLowerCase():
 			case "ELECTRODE".toLowerCase():
 			case "MAGNETON".toLowerCase():
+			case "DRATINI".toLowerCase():
 				rare = true;
 				break;
 			case "PIKACHU".toLowerCase():
@@ -869,7 +878,6 @@ function checkForRare(spawn, cached, nearby, lat, lng) {
 			case "Vulpix".toLowerCase():
 			case "MACHOP".toLowerCase():
 			case "EEVEE".toLowerCase():
-			case "DRATINI".toLowerCase():
 			case "RHYHORN".toLowerCase():
 			case "NIDORINA".toLowerCase():
 			case "NIDORINO".toLowerCase():
@@ -877,6 +885,8 @@ function checkForRare(spawn, cached, nearby, lat, lng) {
 			case "VOLTORB".toLowerCase():
 			case "MAGNEMITE".toLowerCase():
 			case "GRIMER".toLowerCase():
+			case "GASTLY".toLowerCase():
+			case "KOFFING".toLowerCase():
 				needed = true;
 				break;
 			case "ABRA".toLowerCase():
@@ -910,7 +920,7 @@ function checkForRare(spawn, cached, nearby, lat, lng) {
 				storedEncounters.push(encounterId);
 				console.log("FOUND "  + spawn.pokemon_id + " " + lat + ", " + lng + " At " +  new Date() + " - " + encounterId);
 
-				var link = "https://www.google.com/maps/dir/53+Butter+Row,MK12+5GB/" + lat + "," + lng + "/data=!4m2!4m1!3e2";
+				var link = "https://www.google.com/maps/dir/" + centerLocation[0] + "," + centerLocation[1] + "/" + lat + "," + lng + "/data=!4m2!4m1!3e2";
 
 				var $pokemonsSeen = $("#pokemonSeenList");
 				var $sighting = "<div style='font-weight: bold'>" + spawn.pokemon_id + " At " +  new Date().toLocaleTimeString() + "  -  <a href='" + link +"' target='_blank'>View</a></div>";
@@ -1032,6 +1042,7 @@ function gogoCounter() {
 
 		if (nextScan) {
 			latlngPoint = new L.LatLng(nextScan[0], nextScan[1]);
+            nextScan = null;
 		} else {
 			latlngPoint = new L.LatLng(getRandomArbitrary(latMin, latMax), getRandomArbitrary(lonMin, lonMax));
 		}
@@ -1047,14 +1058,12 @@ function gogoCounter() {
 				layerPoint: map.latLngToLayerPoint(latlngPoint),
 				containerPoint: map.latLngToContainerPoint(latlngPoint)
 			});
-			nextScan = null;
 		}
 	}
-
 }
 
 function getRandomArbitrary(min, max) {
-	var multiplier = 2500;
+	var multiplier = 4500;
 
 	min = min * multiplier;
 	max = max * multiplier;
@@ -1095,7 +1104,7 @@ function distance(lat1, lon1, lat2, lon2) {
 
 function getNextLocation(startLat, startLong, bearing) {
 
-	var distance = 90;
+	var distance = 120;
     var radius = 6371e3;
 
     var δ = Number(distance) / radius; // angular distance in radians
@@ -1120,5 +1129,6 @@ if (Number.prototype.toRadians === undefined) {
 if (Number.prototype.toDegrees === undefined) {
     Number.prototype.toDegrees = function() { return this * 180 / Math.PI; };
 }
+
 
 
